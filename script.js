@@ -1,28 +1,36 @@
-const proceedBtn = document.getElementById('proceedBtn');
-const message = document.getElementById('message');
-const jumpscareVideo = document.getElementById('jumpscareVideo');
+const button = document.getElementById('stepButton');
+const content = document.getElementById('content');
+const video = document.getElementById('scaryVideo');
 
-proceedBtn.addEventListener('click', () => {
-  proceedBtn.style.display = "none"; // Hide button
-  message.style.display = "block";
-  message.textContent = "Ready";
-});
+let step = 1;
 
-message.addEventListener('click', () => {
-  if (message.textContent === "Ready") {
-    message.textContent = "You really want it huh!";
-    
-    setTimeout(() => {
-      message.style.display = "none";
-      jumpscareVideo.style.display = "block";
-      jumpscareVideo.play();
-    }, 2000);
+button.addEventListener('click', () => {
+  if (step === 1) {
+    button.textContent = 'READY';
+    step++;
+  } else if (step === 2) {
+    button.textContent = 'You really want it huh!';
+    step++;
+  } else if (step === 3) {
+    // Play jumpscare
+    video.style.display = 'block';
+    video.play();
+    video.volume = 1;
+
+    // Hide button
+    button.style.display = 'none';
+
+    // When video ends, show final message
+    video.onended = () => {
+      video.style.display = 'none';
+      showFinalMessage();
+    };
   }
 });
 
-// When video ends, show April Fool message
-jumpscareVideo.addEventListener('ended', () => {
-  jumpscareVideo.style.display = "none";
-  document.body.style.backgroundColor = "black";
-  alert("APRIL FOOL 2026!");
-});
+function showFinalMessage() {
+  const final = document.createElement('div');
+  final.id = 'finalMessage';
+  final.innerText = 'APRIL FOOL 2026';
+  document.body.appendChild(final);
+}
