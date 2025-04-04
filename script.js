@@ -1,23 +1,23 @@
-const startBtn = document.getElementById('startBtn');
-const readyBtn = document.getElementById('readyBtn');
-const mainDiv = document.getElementById('main');
-const confirmDiv = document.getElementById('confirmScreen');
-const jumpscareDiv = document.getElementById('jumpscare');
-const finalMessage = document.getElementById('finalMessage');
-const scareSound = document.getElementById('scareSound');
+const message = document.getElementById('message');
+const jumpscareVideo = document.getElementById('jumpscareVideo');
 
-startBtn.onclick = () => {
-  mainDiv.classList.add('hidden');
-  confirmDiv.classList.remove('hidden');
-};
+setTimeout(() => {
+  message.textContent = "Ready";
+}, 2000);
 
-readyBtn.onclick = () => {
-  confirmDiv.classList.add('hidden');
-  jumpscareDiv.classList.remove('hidden');
-  scareSound.play();
+setTimeout(() => {
+  message.textContent = "You really want it huh!";
+}, 4000);
 
-  setTimeout(() => {
-    jumpscareDiv.classList.add('hidden');
-    finalMessage.classList.remove('hidden');
-  }, 3000);
-};
+setTimeout(() => {
+  message.style.display = "none";
+  jumpscareVideo.style.display = "block";
+  jumpscareVideo.play();
+}, 6000);
+
+// When video ends, show April Fool message
+jumpscareVideo.addEventListener('ended', () => {
+  jumpscareVideo.style.display = "none";
+  document.body.style.backgroundColor = "black";
+  alert("APRIL FOOL 2026!");
+});
